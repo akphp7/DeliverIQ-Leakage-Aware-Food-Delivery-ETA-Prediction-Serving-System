@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Intermediate artifacts (re-created by `python -m pipelines.p0_data_fixes`)
+models/v2/phase0_xgb.joblib
+
+# Docker (image build not yet verified — excluded until confirmed working)
+Dockerfile
+.dockerignore

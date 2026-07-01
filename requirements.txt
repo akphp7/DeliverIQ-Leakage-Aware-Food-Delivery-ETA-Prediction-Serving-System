@@ -1,0 +1,24 @@
+# DeliverIQ dependencies. Needs Python 3.11+.
+# scikit-learn and xgboost are pinned because the saved models (joblib) must be
+# loaded with the same versions that trained them. If you change them, retrain:
+#   python -m pipelines.run_all
+# Tested with pandas 2.2.3 and 3.0.2.
+pandas>=2.2,<4
+numpy>=2.0
+scikit-learn==1.8.0
+xgboost==3.2.0
+# shap < 0.51 cannot read XGBoost 3.x models (base_score format change)
+shap>=0.51
+scipy>=1.11
+statsmodels>=0.14.2
+duckdb>=1.1
+matplotlib>=3.7
+joblib>=1.3
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.5
+httpx>=0.27
+pytest>=8
+
+# Optional: only for the paper benchmark (python -m pipelines.p6_paper_benchmark)
+# lightgbm>=4.0
