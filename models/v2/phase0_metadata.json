@@ -1,0 +1,73 @@
+{
+  "phase": 0,
+  "split": "random 80/20 seed 42 (same as v1)",
+  "metrics": [
+    {
+      "Model": "Linear Regression",
+      "MAE": 4.766913975732809,
+      "RMSE": 5.979703240143791,
+      "R2": 0.5946422533930544,
+      "MedianAE": 4.06024413089607,
+      "P90_AE": 9.675215350537622,
+      "within_5min_pct": 59.26291543270813,
+      "within_10min_pct": 91.17034112098278,
+      "late_gt5_pct": 19.458155094877704,
+      "early_gt5_pct": 21.27892947241417,
+      "mean_bias": -0.12318891053753138,
+      "train_MAE": 4.752184787746421,
+      "fit_seconds": 0.4
+    },
+    {
+      "Model": "Random Forest",
+      "MAE": 3.137415242278539,
+      "RMSE": 3.947456678411895,
+      "R2": 0.8233498708718963,
+      "MedianAE": 2.669639794019643,
+      "P90_AE": 6.288060958281814,
+      "within_5min_pct": 81.04639684106614,
+      "within_10min_pct": 98.45343863112866,
+      "late_gt5_pct": 9.389053416694088,
+      "early_gt5_pct": 9.564549742239773,
+      "mean_bias": -0.09915535658131597,
+      "train_MAE": 1.926447284097825,
+      "fit_seconds": 31.4
+    },
+    {
+      "Model": "XGBoost",
+      "MAE": 3.1854176054244583,
+      "RMSE": 4.022008960191227,
+      "R2": 0.8166143783724562,
+      "MedianAE": 2.7048168182373047,
+      "P90_AE": 6.423421096801758,
+      "within_5min_pct": 79.94954480640561,
+      "within_10min_pct": 98.42053307008885,
+      "late_gt5_pct": 11.626631567401557,
+      "early_gt5_pct": 8.423823626192826,
+      "mean_bias": 0.1716624600225417,
+      "train_MAE": 2.4010439005368016,
+      "fit_seconds": 1.9
+    }
+  ],
+  "audit": {
+    "rows": 45584,
+    "missing_weather": 616,
+    "missing_traffic": 601,
+    "missing_order_type": 0,
+    "missing_vehicle_type": 0,
+    "missing_festival": 228,
+    "missing_city_type": 1200,
+    "unparsed_rider_id": 0,
+    "sentinel_rider_rows": 91,
+    "rating_out_of_range_after_sentinel": 0,
+    "missing_multiple_deliveries": 993,
+    "bad_order_date": 0,
+    "order_time_unparsed_by_v1": 5799,
+    "order_time_recovered_from_fraction": 4068,
+    "order_time_imputed_from_pickup": 1731,
+    "order_time_still_missing": 0,
+    "restaurant_coords_invalid": 3640,
+    "distance_recovered_with_city_centroid": 3640,
+    "distance_missing": 0,
+    "missing_target": 0
+  }
+}
