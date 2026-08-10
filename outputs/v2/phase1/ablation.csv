@@ -1,0 +1,9 @@
+variant,dropped,cv_MAE_mean,cv_MAE_std,delta_vs_full
+full,-,3.199333333317206,0.06740790601617765,0.0
+no_restaurant_history,"hist_prep_mean, hist_restaurant_orders",3.1090472449729227,0.02824814809575022,-0.09028608834428331
+no_city_code,city_code,3.189872375473075,0.06752570335109406,-0.009460957844130924
+no_missing_flags,"traffic_missing, weather_missing, rider_profile_invalid, order_time_imputed, restaurant_coords_missing",3.2080202120910224,0.06788233329073981,0.008686878773816353
+no_distance_x_traffic,distance_x_traffic,3.176550719647525,0.04942367456344041,-0.02278261366968115
+no_cyclic_hour,"hour_sin, hour_cos",3.2021991062610047,0.07198940126552299,0.002865772943798639
+no_rider_age_rating,"rider_age, rider_rating",4.5020112808873325,0.07004392327066111,1.3026779475701264
+no_distance,"distance_km, distance_x_traffic",3.875919100918889,0.08965459949349051,0.6765857676016829
