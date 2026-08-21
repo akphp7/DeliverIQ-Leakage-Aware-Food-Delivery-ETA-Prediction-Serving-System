@@ -1,0 +1,18 @@
+,mean_abs_shap_min
+Rider age,2.517004
+Rider rating,2.1650846
+Distance x traffic,1.9828281
+Vehicle condition,1.9590995
+Weather,1.7229468
+Distance,1.5156839
+Traffic,1.1875007
+Multiple deliveries,0.66636163
+Order time,0.39615223
+City type,0.37273592
+Festival,0.20715117
+Missing data flags,0.0844946
+City,0.080172226
+Day of week,0.0625018
+Vehicle type,0.048938572
+Order type,0.047980826
+Peak hour,0.008869169

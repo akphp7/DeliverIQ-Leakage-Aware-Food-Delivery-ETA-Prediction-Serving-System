@@ -1,0 +1,109 @@
+{
+  "version": "v2",
+  "point_model_name": "XGBoost (tuned)",
+  "xgb_params": {
+    "n_estimators": 500,
+    "learning_rate": 0.03,
+    "max_depth": 8,
+    "min_child_weight": 3,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 1.0,
+    "objective": "reg:squarederror"
+  },
+  "numeric": [
+    "rider_age",
+    "rider_rating",
+    "vehicle_condition",
+    "multiple_deliveries",
+    "distance_km",
+    "order_hour",
+    "hour_sin",
+    "hour_cos",
+    "day_of_week",
+    "is_weekend",
+    "is_peak_hour",
+    "traffic_level",
+    "distance_x_traffic",
+    "traffic_missing",
+    "weather_missing",
+    "rider_profile_invalid",
+    "order_time_imputed",
+    "restaurant_coords_missing"
+  ],
+  "categorical": [
+    "weather",
+    "traffic",
+    "order_type",
+    "vehicle_type",
+    "festival",
+    "city_type",
+    "city_code",
+    "time_of_day"
+  ],
+  "split_conformal_q80": 4.855438232421875,
+  "train_period": [
+    "2022-02-11",
+    "2022-03-28"
+  ],
+  "test_metrics": {
+    "MAE": 3.1276125952320637,
+    "RMSE": 3.891035613076929,
+    "R2": 0.831840088584963,
+    "MedianAE": 2.7454776763916016,
+    "P90_AE": 6.215873718261719,
+    "within_5min_pct": 81.29366927800127,
+    "within_10min_pct": 98.8037264450561,
+    "late_gt5_pct": 9.81367774719458,
+    "early_gt5_pct": 8.89265297480415,
+    "mean_bias": -0.03204359181372008
+  },
+  "blend_w_rf": 0.2,
+  "stack": {
+    "rf": 0.2867042811735364,
+    "xgb": 0.7173102236828522,
+    "intercept": -0.16361725015058326
+  },
+  "interval_coverage": [
+    {
+      "method": "split conformal",
+      "target_coverage_pct": 80.0,
+      "q_min": 4.855438232421875,
+      "coverage_pct": 79.65276307431716,
+      "mean_width_min": 9.71087646484375,
+      "median_width_min": 9.71087646484375,
+      "above_upper_pct": 10.681770061401652,
+      "below_lower_pct": 9.665466864281177
+    },
+    {
+      "method": "CQR (XGB quantile)",
+      "target_coverage_pct": 80.0,
+      "q_min": 0.4824333190917969,
+      "coverage_pct": 80.52085538852425,
+      "mean_width_min": 10.293662071228027,
+      "median_width_min": 10.142715454101562,
+      "above_upper_pct": 10.385348295574847,
+      "below_lower_pct": 9.09379631590091
+    },
+    {
+      "method": "split conformal",
+      "target_coverage_pct": 90.0,
+      "q_min": 6.218576431274414,
+      "coverage_pct": 89.91107347025195,
+      "mean_width_min": 12.437152862548828,
+      "median_width_min": 12.437152862548828,
+      "above_upper_pct": 5.716705483802667,
+      "below_lower_pct": 4.372221045945373
+    },
+    {
+      "method": "CQR (XGB quantile)",
+      "target_coverage_pct": 90.0,
+      "q_min": 0.5030860900878906,
+      "coverage_pct": 90.1545627778954,
+      "mean_width_min": 12.788719177246094,
+      "median_width_min": 12.725547790527344,
+      "above_upper_pct": 5.388524243065848,
+      "below_lower_pct": 4.456912979038746
+    }
+  ]
+}
