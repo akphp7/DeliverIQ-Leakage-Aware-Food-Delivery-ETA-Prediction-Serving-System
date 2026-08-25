@@ -1,0 +1,14 @@
+,pct_of_orders
+rider_rating,4.39
+rider_age,4.27
+pickup_delay_min,3.8
+city_type,2.63
+multiple_deliveries,2.18
+weather,1.35
+traffic,1.32
+festival,0.5
+traffic_missing,1.32
+weather_missing,1.35
+rider_profile_invalid,0.2
+order_time_imputed,3.8
+restaurant_coords_missing,7.99
