@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeliverIQ v2 — ETA</title>
+<style>
+  :root { --bg:#f6f6f4; --card:#fff; --ink:#0b0b0b; --ink2:#52514e; --line:#e4e3df;
+          --accent:#2a78d6; --up:#c2410c; --down:#15803d; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background:var(--bg); color:var(--ink); }
+  main { max-width: 980px; margin: 32px auto; padding: 0 16px; display:grid; gap:16px; grid-template-columns: 1.2fr 1fr; }
+  @media (max-width: 800px) { main { grid-template-columns: 1fr; } }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px; }
+  h1 { font-size:20px; margin:0 0 4px; } p.sub { margin:0 0 16px; color:var(--ink2); font-size:13px; }
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+  label { display:flex; flex-direction:column; gap:4px; font-size:12px; color:var(--ink2); }
+  input, select { font:inherit; font-size:14px; padding:8px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); }
+  button { margin-top:14px; width:100%; padding:10px; border:0; border-radius:8px; background:var(--accent); color:#fff; font-weight:600; font-size:14px; cursor:pointer; }
+  .eta { font-size:44px; font-weight:700; line-height:1; }
+  .range { color:var(--ink2); margin-top:6px; }
+  .bar { position:relative; height:10px; background:var(--line); border-radius:5px; margin:14px 0 4px; }
+  .bar span { position:absolute; top:0; height:10px; border-radius:5px; background:#9cc2ef; }
+  .bar i { position:absolute; top:-3px; width:3px; height:16px; background:var(--accent); border-radius:2px; }
+  table { width:100%; border-collapse:collapse; margin-top:14px; font-size:14px; }
+  td { padding:6px 0; border-bottom:1px solid var(--line); } td.n { text-align:right; font-variant-numeric: tabular-nums; }
+  .up { color:var(--up); } .down { color:var(--down); }
+  .warn { margin-top:12px; font-size:13px; color:var(--up); }
+  .muted { color:var(--ink2); font-size:12px; margin-top:12px; }
+</style>
+</head>
+<body>
+<main>
+  <section class="card">
+    <h1>DeliverIQ v2</h1>
+    <p class="sub">Order-time ETA with an 80% range and the reasons behind it. Leave a field empty if it is unknown.</p>
+    <form id="f" class="grid">
+      <label>Restaurant latitude<input name="restaurant_latitude" value="12.914264" required></label>
+      <label>Restaurant longitude<input name="restaurant_longitude" value="77.6784" required></label>
+      <label>Customer latitude<input name="delivery_latitude" value="13.004264" required></label>
+      <label>Customer longitude<input name="delivery_longitude" value="77.7684" required></label>
+      <label>Order date (DD-MM-YYYY)<input name="order_date" value="25-03-2022" required></label>
+      <label>Order time (HH:MM)<input name="time_ordered" value="19:45" required></label>
+      <label>Traffic<select name="road_traffic_density"><option value="">Unknown</option><option>Low</option><option>Medium</option><option>High</option><option selected>Jam</option></select></label>
+      <label>Weather<select name="weather_conditions"><option value="">Unknown</option><option>Sunny</option><option selected>Cloudy</option><option>Fog</option><option>Windy</option><option>Stormy</option><option>Sandstorms</option></select></label>
+      <label>Rider age<input name="delivery_person_age" value="27"></label>
+      <label>Rider rating<input name="delivery_person_rating" value="4.7"></label>
+      <label>Vehicle condition (0–3)<input name="vehicle_condition" value="2"></label>
+      <label>Multiple deliveries<input name="multiple_deliveries" value="1"></label>
+      <label>City code<input name="city_code" value="BANG"></label>
+      <label>Festival<select name="festival"><option>No</option><option>Yes</option></select></label>
+    </form>
+    <button id="go">Predict ETA</button>
+  </section>
+  <section class="card" id="out">
+    <p class="sub">The prediction appears here.</p>
+  </section>
+</main>
+<script>
+const NUM = ["restaurant_latitude","restaurant_longitude","delivery_latitude","delivery_longitude",
+             "delivery_person_age","delivery_person_rating","vehicle_condition","multiple_deliveries"];
+document.getElementById("go").onclick = async () => {
+  const body = {};
+  for (const [k, v] of new FormData(document.getElementById("f")).entries()) {
+    if (v === "") { body[k] = null; continue; }
+    body[k] = NUM.includes(k) ? Number(v) : v;
+  }
+  const out = document.getElementById("out");
+  const r = await fetch("/v2/predict", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
+  const d = await r.json();
+  if (!r.ok) { out.innerHTML = `<p class="warn">Error: ${JSON.stringify(d.detail)}</p>`; return; }
+  const [lo, hi] = d.eta_range_80, max = Math.max(60, hi + 5);
+  const rows = d.top_reasons.map(x =>
+    `<tr><td>${x.factor}</td><td class="n ${x.minutes >= 0 ? "up" : "down"}">${x.minutes >= 0 ? "+" : ""}${x.minutes.toFixed(1)} min</td></tr>`).join("");
+  out.innerHTML = `
+    <div class="eta">${d.eta_minutes} min</div>
+    <div class="range">80% range: ${lo}–${hi} min</div>
+    <div class="bar"><span style="left:${lo/max*100}%;width:${(hi-lo)/max*100}%"></span><i style="left:${d.eta_minutes/max*100}%"></i></div>
+    <table><tr><td><b>Top reasons</b> (vs a typical ${d.baseline_minutes} min)</td><td></td></tr>${rows}</table>
+    ${d.warnings.length ? `<div class="warn">${d.warnings.join(" · ")}</div>` : ""}
+    <div class="muted">${d.model_version} · ${d.source} · ${d.latency_ms} ms</div>`;
+};
+</script>
+</body>
+</html>

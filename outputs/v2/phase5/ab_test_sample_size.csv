@@ -1,0 +1,7 @@
+metric,baseline,target,relative_change,orders_per_arm
+late > 5 min rate,0.0981,0.0932,0.05,56406
+late > 5 min rate,0.0981,0.0883,0.1,13771
+late > 5 min rate,0.0981,0.0785,0.2,3272
+absolute ETA error (min),3.128,3.08,0.016,33650
+absolute ETA error (min),3.128,3.03,0.032,8414
+absolute ETA error (min),3.128,2.93,0.064,2104

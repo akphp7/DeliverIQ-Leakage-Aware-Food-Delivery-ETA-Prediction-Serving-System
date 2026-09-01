@@ -1,0 +1,12 @@
+feature,psi,status
+city_code,1.1021207897007528,drift
+distance_km,0.019942268632856412,stable
+order_hour,0.004936598179518685,stable
+target: time_taken_min,0.002111967034921006,stable
+weather,0.000934739792455095,stable
+traffic,0.0008126136148116032,stable
+rider_rating,0.0008119797093654202,stable
+rider_age,0.0004953649125195843,stable
+vehicle_type,0.00033949033428230455,stable
+festival,0.0002856033318982931,stable
+multiple_deliveries,0.0002663357300039708,stable
